@@ -61,6 +61,10 @@ png.js@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/png.js/-/png.js-0.2.1.tgz#da6b83c134bdc101940d9ab1c98e9154affbb1f2"
 
+progress:
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/progress/-/progress-1.1.8.tgz#e260c78f6161cdd9b0e56cc3e0a85de17c7a57be"
+
 sync-exec@~0.6.x:
   version "0.6.2"
   resolved "https://registry.yarnpkg.com/sync-exec/-/sync-exec-0.6.2.tgz#717d22cc53f0ce1def5594362f3a89a2ebb91105"
