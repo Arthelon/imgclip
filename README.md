@@ -2,6 +2,8 @@
 
 Command line utility that extracts text from an image into the system clipboard. Uses the [tesseract](https://github.com/naptha/tesseract.js) OCR
 
+[![asciicast](https://asciinema.org/a/1n7wfprarthnh9htkavu3trkl.png)](https://asciinema.org/a/1n7wfprarthnh9htkavu3trkl)
+
 ### Installation
 
     npm install -g imgclip

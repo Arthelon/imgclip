@@ -25,7 +25,6 @@ if (args.length == 0 || args.length > 3) {
 		if (args[i] == "--lang") {
 			lang = args[i + 1]
 			args.splice(i, 2)
-			console.log(args)
 		}
 	}
 	recognize(args[0], lang)
@@ -48,6 +47,9 @@ function recognize(imagePath, lang) {
 		console.log(err)
 	})
 	.then(result => {
+		if (prev < 100) {
+			bar.tick(100 - prev)
+		}
 		copyPaste.copy(result.text, () => {
 			console.log("Finished copying to clipboard")
 			process.exit()
