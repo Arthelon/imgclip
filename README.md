@@ -8,6 +8,8 @@ Command line utility that extracts text from an image into the system clipboard.
 
     npm install -g imgclip
 
+NOTE: Compatible only with node v6.8.0+
+
 ### Usage
 
     Usage: imgclip PATH [options...]
