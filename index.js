@@ -6,6 +6,7 @@ const package = require('./package.json')
 let text
 let args = process.argv.slice(2)
 let lang = 'eng'
+let langs = ['afr', 'ara', 'aze', 'bel', 'ben', 'ben', 'bul', 'cat', 'ces', 'chi_sim', 'chi_tra', 'chr', 'dan', 'deu', 'ell', 'eng', 'enm', 'epo', 'epo_alt', 'equ', 'est', 'eus', 'fin', 'fra', 'frk', 'frm', 'glg', 'grc', 'heb', 'hin', 'hrv', 'hun', 'ind', 'isl', 'ita', 'ita_old', 'jpn', 'kan', 'kor', 'lav', 'lit', 'mal', 'mkd', 'mlt', 'msa', 'nld', 'nor', 'pol', 'por', 'ron', 'rus', 'slk', 'slv', 'spa', 'spa_old', 'sqi', 'srp', 'swa', 'swe', 'tam', 'tel', 'tgl', 'tha', 'tur', 'ukr', 'vie']
 let print = false
 let version = false
 const usageTmpl = `Command line utility that copies image text to clipboard
@@ -39,7 +40,12 @@ if (args.length == 0 || args.length > 5) {
 		}
 	}
 
-	recognize(args[0], lang)
+  if(langs.indexOf(lang) > -1) {
+		recognize(args[0], lang)
+	} else {
+		console.log('Invalid language!')
+		printUsage()
+	}
 }
 
 function recognize(imagePath, lang) {
