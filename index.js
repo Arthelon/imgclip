@@ -38,7 +38,7 @@ if(langs.indexOf(args.lang) > -1) {
 }
 
 if(args.print)
-  print = true;
+  print = true
 
 function recognize(imagePath, lang) {
 	const bar = new Progress("recognizing [:bar] :percent :elapseds", {total: 100})
