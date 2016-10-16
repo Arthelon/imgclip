@@ -24,9 +24,8 @@ if(!args.args.length || args.args[0] === undefined){
 	return
 }
 
-if(args.lang === true) {
+if(!args.lang) {
   args.lang = "eng"
-  recognize(args.args[0], args.lang)
 }
 
 if(langs.indexOf(args.lang) > -1) {
@@ -61,9 +60,8 @@ function recognize(imagePath, lang) {
 			bar.tick(100 - prev)
 		}
 		copyPaste.copy(result.text, () => {
-      if(print)
+      		if(print)
 				console.log("\nResult:\n" + result.text.slice(0, result.text.length - 1))
-
 			console.log("Finished copying to clipboard!")
 			process.exit()
 		})
