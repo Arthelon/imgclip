@@ -12,10 +12,13 @@ NOTE: Compatible only with node v6.8.0+
 
 ### Usage
 
-    Usage: imgclip PATH [options...]
+    Usage: imgclip PATH [options]
     
     Options:
     
-        --lang LANGUAGE    language of the text in the image. 
+    -h, --help             output usage information
+    -V, --version          output the version number
+    -l, --lang [language]  language of the text in the image.
+    -p, --print            prints out the text in the image.
     
 Full language list can be found [here](https://github.com/naptha/tesseract.js/blob/master/docs/tesseract_lang_list.md)
