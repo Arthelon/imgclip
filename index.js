@@ -12,6 +12,7 @@ program
 	.description(PkgJson.description)
 	.version(PkgJson.version)
 	.option("-l, --lang [language]", "language of the text in the image.")
+	.option("-c, --clean-up", "removes the generated language data file (.traineddata) after the image recognition job has finished")	
 	.option("-p, --print", "prints out the text in the image.\n\nFull language list can be found here: \nhttps://github.com/naptha/tesseract.js/blob/master/docs/tesseract_lang_list.md")
 	.parse(process.argv)
 
@@ -21,24 +22,29 @@ if (errorMessage) {
 	program.help()
 	return
 }
-recognize(program.args[0], program.lang, program.print)
+recognize({
+	imagePath: program.args[0], // file path
+	lang: program.lang,
+	printResult: program.print,
+	cleanup: program.cleanUp,
+})
 
 function validateArgs(args) {
 	if (!args.args.length || !args.args[0]){
 		return "No Path Specified"
 	}
 
-	if (args.lang && langs.indexOf(args.lang) === -1) {
-		return "Invalid Language!"
-	}
-
 	if (!fs.existsSync(args.args[0])) {
 		return `File path not found: ${args.args[0]}`;
+	}
+
+	if (args.lang && langs.indexOf(args.lang) === -1) {
+		return "Invalid Language!"
 	}
 	return null;
 }
 
-function recognize(imagePath, lang = 'eng', printResult = false) {
+function recognize({ imagePath, lang = 'eng', printResult = false, cleanup = false }) {
 	const bar = new Progress("recognizing [:bar] :percent :elapseds", {total: 100})
 	let prev = 0
 	Tesseract.recognize(imagePath, {
@@ -58,6 +64,9 @@ function recognize(imagePath, lang = 'eng', printResult = false) {
 	.then(result => {
 		if (prev < 100) {
 			bar.tick(100 - prev)
+		}
+		if (cleanup) {
+			fs.unlinkSync(`${lang}.traineddata`)
 		}
 		copyPaste.copy(result.text, () => {
 			if(printResult) {
