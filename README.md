@@ -1,4 +1,4 @@
-# imgclip
+# imgclip  [![npm](https://img.shields.io/badge/npm-v1.2.0-blue.svg)](https://www.npmjs.com/package/imgclip)
 
 Command line utility that extracts text from an image into the system clipboard. Uses the [tesseract.js](https://github.com/naptha/tesseract.js) OCR wrapper
 
