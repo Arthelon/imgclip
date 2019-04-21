@@ -8,12 +8,13 @@ const fs = require("fs");
 const langs = ["afr", "ara", "aze", "bel", "ben", "ben", "bul", "cat", "ces", "chi_sim", "chi_tra", "chr", "dan", "deu", "ell", "eng", "enm", "epo", "epo_alt", "equ", "est", "eus", "fin", "fra", "frk", "frm", "glg", "grc", "heb", "hin", "hrv", "hun", "ind", "isl", "ita", "ita_old", "jpn", "kan", "kor", "lav", "lit", "mal", "mkd", "mlt", "msa", "nld", "nor", "pol", "por", "ron", "rus", "slk", "slv", "spa", "spa_old", "sqi", "srp", "swa", "swe", "tam", "tel", "tgl", "tha", "tur", "ukr", "vie"]
 
 program
-    .usage("PATH [options]")
+    .usage("PATHS [options]")
     .description(PkgJson.description)
     .version(PkgJson.version)
     .option("-l, --lang [language]", "language of the text in the image.")
     .option("-c, --clean-up", "removes the generated language data file (.traineddata) after the image recognition job has finished")
     .option("-p, --print", "prints out the text in the image.\n\nFull language list can be found here: \nhttps://github.com/naptha/tesseract.js/blob/master/docs/tesseract_lang_list.md")
+    .option("-w, --write", "writes the text from the images to files in the same directory with the same names but as a text file")
     .parse(process.argv)
 
 const errorMessage = validateArgs(program)
@@ -32,6 +33,7 @@ async function start() {
             lang: program.lang,
             printResult: program.print,
             cleanup: program.cleanUp,
+            writeToFile: program.write,
         })
     }
     //sleep so the process has time to print everything out
@@ -58,7 +60,7 @@ function validateArgs(args) {
     return null;
 }
 
-async function recognize({ imagePath, lang = 'eng', printResult = false, cleanup = false }) {
+async function recognize({ imagePath, lang = 'eng', printResult = false, cleanup = false, writeToFile = false}) {
     const bar = new Progress("recognizing [:bar] :percent :elapseds", {total: 100})
     let prev = 0
     await Tesseract.recognize(imagePath, {
@@ -86,7 +88,13 @@ async function recognize({ imagePath, lang = 'eng', printResult = false, cleanup
                 if(printResult) {
                     console.log("\nResult:\n" + result.text.slice(0, result.text.length - 1))
                 }
+
                 console.log("Finished copying to clipboard!")
+                if(writeToFile) {
+                    fs.writeFile(imagePath.substr(0, imagePath.lastIndexOf("."))+'.txt', result.text, (err)=>{
+                        if (err) console.log(err)
+                    })
+                }
             })
         })
 }
